@@ -9,6 +9,16 @@ driver.get("https://www.instagram.com/guviofficial/")
 driver.maximize_window()
 wait = WebDriverWait(driver, 20)
 
+username_field = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "username")))
+username_field.send_keys("Vishal")
+
+# Enter password
+password_field = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "password")))
+password_field.send_keys("*****")
+
+# login button
+login_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']")))
+login_button.click()
 
 # XPaths for Followers and Following
 followers_xpath = "//a[contains(@href, '/followers')]/span"
