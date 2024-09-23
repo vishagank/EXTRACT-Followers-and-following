@@ -7,27 +7,33 @@ from selenium.webdriver.support import expected_conditions as EC
 driver = webdriver.Chrome()
 driver.get("https://www.instagram.com/guviofficial/")
 driver.maximize_window()
+
 wait = WebDriverWait(driver, 20)
 
-username_field = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "username")))
-username_field.send_keys("Vishal")
+# Enter username  # Replace with your Instagram username.
+username_field = wait.until(EC.presence_of_element_located((By.NAME, "username")))
+username_field.send_keys("ABCD") 
 
-# Enter password
-password_field = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "password")))
-password_field.send_keys("*****")
+# Enter password # Replace with your Instagram password.
+password_field = wait.until(EC.presence_of_element_located((By.NAME, "password")))
+password_field.send_keys("****")  
 
-# login button
-login_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']")))
+# Click login button
+login_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit']")))
 login_button.click()
+
+#the page to load after login
+wait.until(EC.presence_of_element_located((By.XPATH, "//a[contains(@href, '/guviofficial/')]")))
+driver.get("https://www.instagram.com/guviofficial/")
 
 # XPaths for Followers and Following
 followers_xpath = "//a[contains(@href, '/followers')]/span"
 following_xpath = "//a[contains(@href, '/following')]/span"
 
 try:
-    # extract the Followers count
+    #extract the Followers count
     followers_element = wait.until(EC.visibility_of_element_located((By.XPATH, followers_xpath)))
-    followers_count = followers_element.text
+    followers_count = followers_element.get_attribute("title")  # Sometimes it's in the 'title' attribute
     print("Number of followers:", followers_count)
 
     #extract the Following count
